@@ -5,7 +5,7 @@ name: RepoDispatch
 # Controls when the workflow will run
 on:
   repository_dispatch:
-
+    types: [EventX,EventZ]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
