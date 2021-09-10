@@ -54,7 +54,7 @@ jobs:
           body: Just some minor changes
           # Gives the release a custom name. Defaults to tag name
           files: README.md
-          tag: v1.0.0
+          tag_name: v1.0.0
           
 
           
