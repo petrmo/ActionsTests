@@ -36,6 +36,7 @@ jobs:
           path: README.md
           
   release:
+    needs: [build]
     runs-on: ubuntu-latest
     
     steps:
