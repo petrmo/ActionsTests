@@ -33,7 +33,7 @@ jobs:
           # Artifact name
           name: Outputs
           # A file, directory or wildcard pattern that describes what to upload
-          path: readme.md
+          path: README.md
           
   release:
     runs-on: ubuntu-latest
@@ -44,17 +44,15 @@ jobs:
         with:
           # Artifact name
           name: Outputs
-      - name: releases-action
+      - name: GH Release
         # You may pin to the exact commit or the version.
-        # uses: nickatnight/releases-action@893540eb446b37c82cf414f2bb439e805e70b41f
-        uses: nickatnight/releases-action@v2
+        # uses: softprops/action-gh-release@2d72d869af3bf23602f9593a1e3fd739b80ac1eb
+        uses: softprops/action-gh-release@v0.1.12
         with:
-          # Name of branch to release from
-          branch: main
-          # Name of the release
-          name: Make a release
-          # Message for the release
-          message: Just a test release
-          # Name of tag
-          tag: v.1.0.0
+          # Note-worthy description of changes in release
+          body: Just some minor changes
+          # Gives the release a custom name. Defaults to tag name
+          files: README.md
+          
+
           
