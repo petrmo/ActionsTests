@@ -1,0 +1,20 @@
+name: 'Composite Action'
+description: 'Just testing'
+inputs:
+  MyInput:  # id of input
+    description: 'Just an input'
+    required: true
+    default: 'Hello'
+outputs:
+  random-number:
+    description: "Random number"
+    value: ${{ steps.random-number-generator.outputs.random-id }}
+runs:
+  using: "composite"
+  steps:
+    - run: echo Hello ${{ inputs.who-to-greet }}.
+      shell: bash
+    - id: random-number-generator
+      run: echo "::set-output name=random-id::$(echo $RANDOM)"
+      shell: bash
+    
