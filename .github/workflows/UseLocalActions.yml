@@ -31,7 +31,7 @@ jobs:
           MyInput: 'Ciao from Other repo'
       - run: echo random-number ${{ steps.OtherRepo.outputs.random-number }}
         shell: bash
-      - name: PetrmoAction1
+      - id: PetrmoAction1
         # You may pin to the exact commit or the version.
         # uses: petrmo/PetrmoAction1@d45256eba86d6537ff98e6e2cb4439703ba99e11
         uses: petrmo/PetrmoAction1@v2
