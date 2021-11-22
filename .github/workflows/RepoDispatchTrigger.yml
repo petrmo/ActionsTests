@@ -6,7 +6,7 @@ name: RepoDispatch
 on:
   # use this powershell to trigger:
   #$headers = @{"Authorization" = "token ghp_..."}
-  #$disp = Invoke-RestMethod https://api.github.com/repos/petrmo/actionstests/dispatches -Method post -Headers $headers -Body '{"event_type":"EventX"}'
+  #$disp = Invoke-RestMethod https://api.github.com/repos/petrmo/actionstests/dispatches -Method post -Headers $headers -Body '{"event_type":"EventX", "client_payload":{"data":"1,2,3,4", "name":"MyEventX"}}'
   repository_dispatch:
     types: [EventX,EventZ]
 
@@ -33,7 +33,7 @@ jobs:
       - name: Run a multi-line script
         run: |
           echo ${{ github.event.event_type}}
-          echo ${{ github.event.properties.name}}
-          echo ${{ github.event.properties.data}}
+          echo ${{ github.event.client_payload.name}}
+          echo ${{ github.event.client_payload.data}}
           echo test, and deploy your project.
 
