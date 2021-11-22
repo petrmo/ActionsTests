@@ -29,10 +29,13 @@ jobs:
       - name: Run a one-line script
         run: echo Hello, world!
 
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJSON(github) }}
+        run: echo "$GITHUB_CONTEXT"
       # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
+      - name: Show event properties
         run: |
-          echo ${{ toJSON(github) }}
           echo ${{ github.event.event_type}}
           echo ${{ github.event.client_payload.name}}
           echo ${{ github.event.client_payload.data}}
