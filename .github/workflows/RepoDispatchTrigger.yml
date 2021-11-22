@@ -2,8 +2,11 @@
 
 name: RepoDispatch
 
-# Controls when the workflow will run
+# Controls when the workflow will run 
 on:
+  # use this powershell to trigger:
+  #$headers = @{"Authorization" = "token ghp_..."}
+  #$disp = Invoke-RestMethod https://api.github.com/repos/petrmo/actionstests/dispatches -Method post -Headers $headers -Body '{"event_type":"EventX"}'
   repository_dispatch:
     types: [EventX,EventZ]
 
@@ -29,5 +32,5 @@ jobs:
       # Runs a set of commands using the runners shell
       - name: Run a multi-line script
         run: |
-          echo Add other actions to build,
+          echo {{$github.event.event_type}}
           echo test, and deploy your project.
