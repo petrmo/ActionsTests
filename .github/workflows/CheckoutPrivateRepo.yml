@@ -26,4 +26,4 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: petrmo/Powershell
-          token: ${{ system.GITHUB_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
