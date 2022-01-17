@@ -26,7 +26,7 @@ jobs:
       - run: echo random-number ${{ steps.LocalRepo.outputs.random-number }}
         shell: bash
       - id: OtherRepo
-        uses: petrmo/PetrmoAction1@v1
+        uses: petrmo/PetrmoAction1@v2
         with:
           MyInput: 'Ciao from Other repo'
       - run: echo random-number ${{ steps.OtherRepo.outputs.random-number }}
