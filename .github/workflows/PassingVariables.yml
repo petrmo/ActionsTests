@@ -29,12 +29,6 @@ jobs:
         run: echo "${{github.event.inputs.InputVar}}"
       - name: Show root var
         run: echo "%RootEnv% -- ${{env.RootEnv}}"
-      - name: Set root var
-        run: |
-          SET RootEnv=RootValueA
-          echo "%RootEnv% -- ${{env.RootEnv}}"
-      - name: Show root var
-        run: echo "%RootEnv% -- ${{env.RootEnv}}"
       - name: Set root var with output
         id: SetRoot
         run: |
