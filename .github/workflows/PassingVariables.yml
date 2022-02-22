@@ -30,26 +30,31 @@ jobs:
       - name: Show root var
         run: echo "$RootEnv -- %RootEnv% -- ${{env.RootEnv}}"
       - name: Set root var
-        run: SET RootEnv="RootValueA"
+        run: |
+          SET RootEnv="RootValueA"
+          echo "%RootEnv% -- ${{env.RootEnv}}"
       - name: Show root var
         run: echo "$RootEnv -- %RootEnv% -- ${{env.RootEnv}}"
       - name: Set root var with output
-        run: echo "::set-output name=RootVar::RootValueAA"
+        id: SetRoot
+        run: |
+          echo "::set-output name=RootVar::RootValueAA"
+          echo "%RootEnv% -- ${{env.RootEnv}}"
       - name: Show root var
-        run: echo "$RootEnv -- %RootEnv% -- ${{env.RootEnv}}"  
+        run: echo "%RootEnv% -- ${{env.RootEnv}} -- ${{steps.SetRoot.outputs.RootVar}}"  
       - name: Set var 1 with set-output
         id: Var1Step
         run: echo "::set-output name=Var1::ThisisVar1"
       - name: Show var 1
-        run: echo "$Var1 -- %Var1% -- ${{env.Var1}}"
+        run: echo "%Var1% -- ${{env.Var1}} -- ${{steps.Var1Step.outputs.Var1}}"
       - name: Set var 2 with GITHUB_ENV
         id: Var2Step
         run: echo "Var2=ThisIsVar2" >> $GITHUB_ENV
       - name: Show var 2
-        run: echo "$Var2 -- %Var2% -- ${{env.Var2}}"
+        run: echo "%Var2% -- ${{env.Var2}} -- ${{steps.Var2Step.outputs.Var2}}"
     outputs:
       Var1Out: ${{steps.Var1Step.outputs.Var1}}
-      Var1bOut: $Var1
+      Var1bOut: ${{github.event.inputs.InputVar}}
       Var2Out: ${{steps.Var2Step.outputs.Var2}}
 
   B:
@@ -60,8 +65,8 @@ jobs:
       # Steps represent a sequence of tasks that will be executed as part of the job
       steps:
         - name: Show root var
-          run: echo "$RootEnv -- %RootEnv%"
+          run: echo "%RootEnv%"
         - name: Show Var1
-          run: echo "$Var1--%Var1%"
+          run: echo "%Var1%"
         - name: Show job outputs
-          run: echo ${{needs.A.outputs.Var1Out}}--${{needs.A.outputs.Var1bOut}}--${{needs.A.outputs.Var2Out}}
+          run: echo ${{needs.A.outputs.Var1Out}} -- ${{needs.A.outputs.Var1bOut}} -- ${{needs.A.outputs.Var2Out}}
