@@ -82,10 +82,18 @@ jobs:
           echo "$RootEnv -- ${{env.RootEnv}}"
       - name: Show root var
         run: echo "$RootEnv -- ${{env.RootEnv}} -- ${{steps.SetRoot.outputs.RootEnv}}"  
-      - name: Set var 1 with set-output
+      - name: Set var 1 with set-output 
         id: Var1Step
         run: |
-          echo "::set-output name=Var1::ThisisVar1"
+          echo "::set-output name=Var1::ThisisVar1B"
+          echo "$Var1 -- ${{env.Var1}} -- ${{steps.Var1Step.outputs.Var1}}"
+          echo !::add-mask::{value}!
+      - name: Show var 1 before mask
+        run: echo "$Var1 -- ${{env.Var1}} -- ${{steps.Var1Step.outputs.Var1}}"
+      - name: Mask var 1
+        run: |
+          echo "$Var1 -- ${{env.Var1}} -- ${{steps.Var1Step.outputs.Var1}}"
+          echo "::add-mask::${{steps.Var1Step.outputs.Var1}}"
           echo "$Var1 -- ${{env.Var1}} -- ${{steps.Var1Step.outputs.Var1}}"
       - name: Show var 1
         run: echo "$Var1 -- ${{env.Var1}} -- ${{steps.Var1Step.outputs.Var1}}"
