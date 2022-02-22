@@ -45,14 +45,14 @@ jobs:
       - name: Set var 1 with set-output
         id: Var1Step
         run: |
-          echo "::set-output name=Var1::ThisisVar1"
+          echo ::set-output name=Var1::ThisisVar1
           echo "%Var1% -- ${{env.Var1}} -- ${{steps.Var1Step.outputs.Var1}}"
       - name: Show var 1
         run: echo "%Var1% -- ${{env.Var1}} -- ${{steps.Var1Step.outputs.Var1}}"
       - name: Set var 2 with GITHUB_ENV
         id: Var2Step
         run: |
-          echo "Var2=ThisIsVar2" >> $GITHUB_ENV
+          echo Var2=ThisIsVar2 >> $GITHUB_ENV
           echo "%Var2% -- ${{env.Var2}} -- ${{steps.Var2Step.outputs.Var2}}"
       - name: Show var 2
         run: echo "%Var2% -- ${{env.Var2}} -- ${{steps.Var2Step.outputs.Var2}}"
