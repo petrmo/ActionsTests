@@ -6,9 +6,17 @@ name: PassingVariables
 on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
+    inputs:
+      InputVar:
+        type: text
+        required: true
+        default: HelloInput
 
 env:
   RootEnv: RootValue
+defaults:
+  run: 
+    shell: cmd
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   A:
@@ -17,6 +25,8 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+      - name: Show inut
+        run: echo "${{github.event.inputs.InputVar}}"
       - name: Show root var
         run: echo "$RootEnv -- %RootEnv% -- ${{env.RootEnv}}"
       - name: Set root var
@@ -40,7 +50,7 @@ jobs:
     outputs:
       Var1Out: ${{steps.Var1Step.outputs.Var1}}
       Var1bOut: $Var1
-      Var2Out: ${{steps.Var1Step.outputs.Var2}}
+      Var2Out: ${{steps.Var2Step.outputs.Var2}}
 
   B:
       # The type of runner that the job will run on
