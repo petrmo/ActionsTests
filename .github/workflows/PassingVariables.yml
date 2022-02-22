@@ -32,7 +32,7 @@ jobs:
         id: Var2Step
         run: echo "Var2=ThisIsVar2" >> $GITHUB_ENV
       - name: Show var 2
-        run: echo "$Var2--%Var2%--env.Var2--${{env.Var2}"
+        run: echo "$Var2--%Var2%--env.Var2--${{env.Var2}}"
     outputs:
       Var1Out: ${{steps.Var1Step.outputs.Var1}}
       Var1bOut: $Var1
