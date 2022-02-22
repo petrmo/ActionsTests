@@ -1,0 +1,53 @@
+# This is a basic workflow to help you get started with Actions
+
+name: PassingVariables
+
+# Controls when the workflow will run
+on:
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+env:
+  RootEnv: RootValue
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  A:
+    # The type of runner that the job will run on
+    runs-on: windows-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      - name: Show root var
+        run: echo "$RootEnv--%RootEnv%--env.RootEnv--${{env.RootEnv}}"
+      - name: Set root var
+        run: SET RootEnv="RootValueA"
+      - name: Show root var
+        run: echo "$RootEnv--%RootEnv%"
+      - name: Set var 1 with set-output
+        id: Var1Step
+        run: echo "::set-output name=Var1::ThisisVar1"
+      - name: Show var 1
+        run: echo "$Var1--%Var1%"
+      - name: Set var 2 with GITHUB_ENV
+        id: Var2Step
+        run: echo "Var2=ThisIsVar2" >> $GITHUB_ENV
+      - name: Show var 2
+        run: echo "$Var2--%Var2%--env.Var2--${{env.Var2}"
+    outputs:
+      Var1Out: ${{steps.Var1Step.outputs.Var1}}
+      Var1bOut: $Var1
+      Var2Out: ${{steps.Var1Step.outputs.Var2}}
+
+  B:
+      # The type of runner that the job will run on
+      runs-on: windows-latest
+      needs: A
+
+      # Steps represent a sequence of tasks that will be executed as part of the job
+      steps:
+        - name: Show root var
+          run: echo "$RootEnv--%RootEnv%
+        - name: Show Var1
+          run: echo "$Var1--%Var1%"
+        - name: Show job outputs
+          run: echo ${{needs.A.outputs.Var1Out}}--${{needs.A.outputs.Var1bOut}}--${{needs.A.outputs.Var2Out}}
