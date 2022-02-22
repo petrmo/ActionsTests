@@ -106,9 +106,10 @@ jobs:
         run: echo "$Var2 -- ${{env.Var2}} -- ${{steps.Var2Step.outputs.Var2}}"
     outputs:
       Var1Out: ${{steps.Var1Step.outputs.Var1}}
+      Var1bOut: ThisisVar1B
       Var2Out: ${{steps.Var2Step.outputs.Var2}}
       Var2bOut: ${{env.Var2}}
-      
+            
   C:
       # The type of runner that the job will run on
       runs-on: windows-latest
@@ -123,5 +124,5 @@ jobs:
         - name: Show job A outputs
           run: echo ${{needs.A.outputs.Var1Out}} -- ${{needs.A.outputs.Var1bOut}} -- ${{needs.A.outputs.Var2Out}}
         - name: Show job B outputs
-          run: echo ${{needs.B.outputs.Var1Out}} -- ${{needs.B.outputs.Var2Out}} -- ${{needs.B.outputs.Var2bOut}}  
+          run: echo ${{needs.B.outputs.Var1Out}} -- ${{needs.B.outputs.Var1bOut}} -- ${{needs.B.outputs.Var2Out}} -- ${{needs.B.outputs.Var2bOut}} -- ThisisVar1B
         
