@@ -20,7 +20,7 @@ defaults:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   A:
-    # The type of runner that the job will run on
+    # The type of runner that the job will run on - windows no quots on set-output!, how to make $GITHUB_ENV working???
     runs-on: windows-latest
 
     # Steps represent a sequence of tasks that will be executed as part of the job
@@ -60,11 +60,51 @@ jobs:
       Var1Out: ${{steps.Var1Step.outputs.Var1}}
       Var1bOut: ${{github.event.inputs.InputVar}}
       Var2Out: ${{steps.Var2Step.outputs.Var2}}
-
   B:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      - name: Show inut
+        run: echo "${{github.event.inputs.InputVar}}"
+      - name: Show root var
+        run: echo "$RootEnv -- ${{env.RootEnv}}"
+      - name: Set root var
+        run: |
+          SET RootEnv=RootValueA
+          echo "$RootEnv -- ${{env.RootEnv}}"
+      - name: Show root var
+        run: echo "$RootEnv -- ${{env.RootEnv}}"
+      - name: Set root var with output
+        id: SetRoot
+        run: |
+          echo "::set-output name=RootEnv::RootValueAA"
+          echo "$RootEnv -- ${{env.RootEnv}}"
+      - name: Show root var
+        run: echo "$RootEnv -- ${{env.RootEnv}} -- ${{steps.SetRoot.outputs.RootEnv}}"  
+      - name: Set var 1 with set-output
+        id: Var1Step
+        run: |
+          echo "::set-output name=Var1::ThisisVar1"
+          echo "$Var1 -- ${{env.Var1}} -- ${{steps.Var1Step.outputs.Var1}}"
+      - name: Show var 1
+        run: echo "$Var1 -- ${{env.Var1}} -- ${{steps.Var1Step.outputs.Var1}}"
+      - name: Set var 2 with GITHUB_ENV
+        id: Var2Step
+        run: |
+          echo "Var2=ThisIsVar2" >> $GITHUB_ENV
+          echo "$Var2 -- ${{env.Var2}} -- ${{steps.Var2Step.outputs.Var2}}"
+      - name: Show var 2
+        run: echo "$Var2 -- ${{env.Var2}} -- ${{steps.Var2Step.outputs.Var2}}"
+    outputs:
+      Var1Out: ${{steps.Var1Step.outputs.Var1}}
+      Var1bOut: ${{github.event.inputs.InputVar}}
+      Var2Out: ${{steps.Var2Step.outputs.Var2}}
+  C:
       # The type of runner that the job will run on
       runs-on: windows-latest
-      needs: A
+      needs: [A, B]
 
       # Steps represent a sequence of tasks that will be executed as part of the job
       steps:
@@ -72,5 +112,8 @@ jobs:
           run: echo "%RootEnv%"
         - name: Show Var1
           run: echo "%Var1%"
-        - name: Show job outputs
+        - name: Show job A outputs
           run: echo ${{needs.A.outputs.Var1Out}} -- ${{needs.A.outputs.Var1bOut}} -- ${{needs.A.outputs.Var2Out}}
+        - name: Show job B outputs
+          run: echo ${{needs.B.outputs.Var1Out}} -- ${{needs.B.outputs.Var1bOut}} -- ${{needs.B.outputs.Var2Out}}  
+        
