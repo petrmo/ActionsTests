@@ -34,11 +34,11 @@ jobs:
           SET RootEnv=RootValueA
           echo "%RootEnv% -- ${{env.RootEnv}}"
       - name: Show root var
-        run: echo "$RootEnv -- %RootEnv% -- ${{env.RootEnv}}"
+        run: echo "%RootEnv% -- ${{env.RootEnv}}"
       - name: Set root var with output
         id: SetRoot
         run: |
-          echo "::set-output name=RootEnv::RootValueAA"
+          echo ::set-output name=RootEnv::RootValueAA
           echo "%RootEnv% -- ${{env.RootEnv}}"
       - name: Show root var
         run: echo "%RootEnv% -- ${{env.RootEnv}} -- ${{steps.SetRoot.outputs.RootEnv}}"  
@@ -51,7 +51,9 @@ jobs:
         run: echo "%Var1% -- ${{env.Var1}} -- ${{steps.Var1Step.outputs.Var1}}"
       - name: Set var 2 with GITHUB_ENV
         id: Var2Step
-        run: echo "Var2=ThisIsVar2" >> $GITHUB_ENV
+        run: |
+          echo "Var2=ThisIsVar2" >> $GITHUB_ENV
+          echo "%Var2% -- ${{env.Var2}} -- ${{steps.Var2Step.outputs.Var2}}"
       - name: Show var 2
         run: echo "%Var2% -- ${{env.Var2}} -- ${{steps.Var2Step.outputs.Var2}}"
     outputs:
