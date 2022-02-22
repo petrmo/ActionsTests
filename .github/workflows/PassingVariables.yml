@@ -28,23 +28,25 @@ jobs:
       - name: Show inut
         run: echo "${{github.event.inputs.InputVar}}"
       - name: Show root var
-        run: echo "$RootEnv -- %RootEnv% -- ${{env.RootEnv}}"
+        run: echo "%RootEnv% -- ${{env.RootEnv}}"
       - name: Set root var
         run: |
-          SET RootEnv="RootValueA"
+          SET RootEnv=RootValueA
           echo "%RootEnv% -- ${{env.RootEnv}}"
       - name: Show root var
         run: echo "$RootEnv -- %RootEnv% -- ${{env.RootEnv}}"
       - name: Set root var with output
         id: SetRoot
         run: |
-          echo "::set-output name=RootVar::RootValueAA"
+          echo "::set-output name=RootEnv::RootValueAA"
           echo "%RootEnv% -- ${{env.RootEnv}}"
       - name: Show root var
-        run: echo "%RootEnv% -- ${{env.RootEnv}} -- ${{steps.SetRoot.outputs.RootVar}}"  
+        run: echo "%RootEnv% -- ${{env.RootEnv}} -- ${{steps.SetRoot.outputs.RootEnv}}"  
       - name: Set var 1 with set-output
         id: Var1Step
-        run: echo "::set-output name=Var1::ThisisVar1"
+        run: |
+          echo "::set-output name=Var1::ThisisVar1"
+          echo "%Var1% -- ${{env.Var1}} -- ${{steps.Var1Step.outputs.Var1}}"
       - name: Show var 1
         run: echo "%Var1% -- ${{env.Var1}} -- ${{steps.Var1Step.outputs.Var1}}"
       - name: Set var 2 with GITHUB_ENV
