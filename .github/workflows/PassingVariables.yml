@@ -60,7 +60,7 @@ jobs:
         id: SplitSec
         shell: pwsh
         env:
-          sec: "{{secrets.TESTSECRET}}"
+          sec: ${{secrets.TESTSECRET}}
         run: |
           $mid = $env:sec.Length/2
           "::set-output name=Sec1::" + $env:sec.Substring(0,$mid)
