@@ -7,6 +7,8 @@ on:
   workflow_run:
     workflows: 
       - PassingVariables
+    types: 
+      - completed
       
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -20,9 +22,16 @@ jobs:
       # Runs a single command using the runners shell
       - name: Run a one-line script
         run: echo Hello, world!
-
+    
       # Runs a set of commands using the runners shell
+      # https://docs.github.com/en/developers/webhooks-and-events/webhooks/webhook-events-and-payloads#webhook-payload-example-50
       - name: Show the event
         run: |
-          echo "The event ${{ github.event.workflow_run }}"
+          echo "The workflow run id ${{ github.event.workflow_run.workflow_id }}"
+          echo "The workflow run url ${{ github.event.workflow_run.workflow_url }}"
+          echo "The workflow run event ${{ github.event.workflow_run.event }}"
+          echo "The workflow id ${{ github.event.workflow.workflow_id }}"
+          echo "The workflow url ${{ github.event.workflow.workflow_url }}"
+          echo "The sender type ${{ github.event.sender.type }}"
+          
           
