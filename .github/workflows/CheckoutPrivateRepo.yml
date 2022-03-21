@@ -16,14 +16,14 @@ jobs:
 
       - name: Checkout private repository with app token
         id: checkout_repo1
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           repository: petrmo/Powershell
           token: ${{ steps.github_app_token.outputs.app_token }}
           
       - name: Checkout private repository with github_token
         id: checkout_repo2
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           repository: petrmo/Powershell
           token: ${{ secrets.GITHUB_TOKEN }}
