@@ -48,7 +48,7 @@ jobs:
       - name: GH Release
         # You may pin to the exact commit or the version.
         # uses: softprops/action-gh-release@2d72d869af3bf23602f9593a1e3fd739b80ac1eb
-        uses: softprops/action-gh-release@v0.1.12
+        uses: softprops/action-gh-release@v1
         with:
           # Note-worthy description of changes in release
           body: Just some minor changes
