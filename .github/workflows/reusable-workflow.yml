@@ -42,3 +42,5 @@ jobs:
         run: |
           echo Call input 3 long: ${{ github.event.inputs.input3 }}
           echo Call input 4 short: ${{ inputs.input4 }}
+      - name: This is only in reusableworkflow branch
+        run: echo reusableworkflow branch
