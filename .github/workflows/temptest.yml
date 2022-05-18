@@ -13,12 +13,19 @@ jobs:
 
     
     steps:
-      - name: set var
-        id: Release_Name
+      - name: set var1
+        id: buildnumber3
         run: |
-          echo "::set-output name=BUILDR_NAME:: XXX "
-          echo "::set-output name=BUILDR_NAME2::XXX "
-          echo "::set-output name=BUILDR_NAME3::XXX"
+          echo "::set-output name=build_number::1.0.1"
+      - name: set var2
+        id: Release_Name
+        env:
+          ReleaseName: 'MnS.TMS.MQAdapter.Articles.QueueReader-${{ steps.buildnumber3.outputs.build_number }}'
+        run: |
+          echo "${{env.ReleaseName}}"
+          echo "::set-output name=BUILDR_NAME:: ${{env.ReleaseName}} "
+          echo "::set-output name=BUILDR_NAME2::${{env.ReleaseName}} "
+          echo "::set-output name=BUILDR_NAME3::${{env.ReleaseName}}"
         
 
       - name: Print ReleaseName
