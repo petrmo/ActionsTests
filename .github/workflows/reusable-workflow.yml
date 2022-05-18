@@ -1,0 +1,42 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Reusable workflow
+
+
+on:
+  workflow_call:
+    inputs:
+      input1:
+        type: string
+        required: true
+      input2:
+        type: string
+        required: true
+    
+  workflow_dispatch:
+    inputs:
+      input3:
+        type: string
+        required: true
+        default: X
+      input4:
+        type: string
+        required: true
+        default: Y
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Show workflow_call inputs
+        if: ${{ github.event_name == 'workflow_call' }}
+        run: |
+          echo Call input 1 long: ${{ github.event.inputs.input1 }}
+          echo Call input 2 short: ${{ inputs.input2 }}
+
+      - name: Show workflow_dispatch inputs
+        if: ${{ github.event_name == 'workflow_dispatch' }}
+        run: |
+          echo Call input 3 long: ${{ github.event.inputs.input3 }}
+          echo Call input 4 short: ${{ inputs.input4 }}
