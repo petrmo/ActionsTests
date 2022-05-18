@@ -27,7 +27,9 @@ on:
 jobs:
   build:
     runs-on: windows-latest
-
+    defaults:
+      run:
+        shell: cmd
     steps:
       - name: Show workflow_call inputs
         if: ${{ github.event_name == 'workflow_call' }}
