@@ -19,6 +19,7 @@ jobs:
           echo "::set-output name=build_number::1.0.1"
       - name: set var2
         id: Release_Name
+        shell: powershell
         env:
           ReleaseName: 'MnS.TMS.MQAdapter.Articles.QueueReader-${{ steps.buildnumber3.outputs.build_number }}'
         run: |
